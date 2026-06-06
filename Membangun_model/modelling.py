@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
-import os
 
 # === Load Dataset ===
 df = pd.read_csv('Social_Network_Ads.csv')
@@ -32,28 +31,19 @@ X_test_scaled  = scaler.transform(X_test)
 # === MLflow Tracking ===
 mlflow.set_experiment("Social_Network_Ads_Classification")
 
+# Autolog - otomatis merekam semua parameter dan metrik
+mlflow.sklearn.autolog()
+
 with mlflow.start_run():
-
-    n_estimators = 100
-    max_depth = 5
-    random_state = 42
-
-    mlflow.log_param("n_estimators", n_estimators)
-    mlflow.log_param("max_depth", max_depth)
-    mlflow.log_param("random_state", random_state)
-
     model = RandomForestClassifier(
-        n_estimators=n_estimators,
-        max_depth=max_depth,
-        random_state=random_state
+        n_estimators=100,
+        max_depth=5,
+        random_state=42
     )
     model.fit(X_train_scaled, y_train)
 
     y_pred = model.predict(X_test_scaled)
     accuracy = accuracy_score(y_test, y_pred)
-
-    mlflow.log_metric("accuracy", accuracy)
-    mlflow.sklearn.log_model(model, "random_forest_model")
 
     print(f"✅ Model berhasil dilatih!")
     print(f"Accuracy: {accuracy*100:.2f}%")
