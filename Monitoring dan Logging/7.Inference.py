@@ -1,29 +1,26 @@
 import pandas as pd
 import pickle
-import mlflow.sklearn
-
-# Load model
-model = mlflow.sklearn.load_model(
-    "../Membangun_model/mlruns/1/artifacts/random_forest_model"
-)
 
 # Load scaler
 with open('../Membangun_model/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
+# Load model
+model_path = '../Membangun_model/mlruns/1/models/m-39393ff580834d80bd7dca3265a8d93d/artifacts/model.pkl'
+
+with open(model_path, 'rb') as f:
+    model = pickle.load(f)
+
 # Contoh data untuk prediksi
 data = {
-    'Gender': [1],        # 1 = Male, 0 = Female
+    'Gender': [1],
     'Age': [35],
     'EstimatedSalary': [80000]
 }
 
 df = pd.DataFrame(data)
-
-# Scaling
 df_scaled = scaler.transform(df)
 
-# Prediksi
 prediction = model.predict(df_scaled)
 result = "Beli ✅" if prediction[0] == 1 else "Tidak Beli ❌"
 
