@@ -2,13 +2,15 @@ import pandas as pd
 import numpy as np
 import mlflow
 import mlflow.sklearn
+import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
 # === Load Dataset ===
-df = pd.read_csv('Social_Network_Ads.csv')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+df = pd.read_csv(os.path.join(BASE_DIR, 'Social_Network_Ads.csv'))
 print("✅ Dataset berhasil dimuat!")
 print("Shape:", df.shape)
 
@@ -30,8 +32,6 @@ X_test_scaled  = scaler.transform(X_test)
 
 # === MLflow Tracking ===
 mlflow.set_experiment("Social_Network_Ads_Classification")
-
-# Autolog - otomatis merekam semua parameter dan metrik
 mlflow.sklearn.autolog()
 
 with mlflow.start_run():
