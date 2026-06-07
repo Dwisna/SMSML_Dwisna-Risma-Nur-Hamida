@@ -1,1 +1,1 @@
-https://github.com/Dwisna/SMSML_Dwisna-Risma-Nur-Hamida/blob/main/Membangun_model/Eksperimen_SML_Dwisna_Risma_Nur_Hamida.ipynb
+https://github.com/Dwisna/Eksperimen_SML_Dwisna-Risma-Nur-Hamida
