@@ -31,7 +31,6 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled  = scaler.transform(X_test)
 
 # === MLflow Tracking ===
-mlflow.set_experiment("Social_Network_Ads_Classification")
 mlflow.sklearn.autolog()
 
 with mlflow.start_run():
